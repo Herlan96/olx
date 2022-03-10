@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Belajar HTML</title>
+  <link href="/stylesheets/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <link href="/fontawesome/css/all.css" rel="stylesheet">
+</head>
+
+<body>
+  <h1>Welcome, <%= user.fullname %><a href="/logout" class="btn btn-danger">Keluar</a></h1>
+  <h1>TODO</h1>
+  <% if(successMessage.length> 0){ %>
+    <div class="alert alert-success" role="alert">
+      <%= successMessage %>
+    </div>
+    <% } %>
+      <div class="card">
+        <form action="" method="get">
+          <input type="hidden" name="page" value="1">
+          <input type="hidden" name="sortBy" value="id">
+          <input type="hidden" name="sortMode" value="desc">
+          <div class="card-header">
+            <h2>Pencarian</h2>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <label for="task" class="col-sm-2">Task</label>
+              <div class="col-sm-10">
+                <input type="text" class="form-control" id="task" name="task" value="<%= query.task %>" />
+              </div>
+            </div>
+
+            <div class="row">
+              <label for="complete" class="col-sm-2">Complete</label>
+              <div class="col-sm-10">
+                <select class="form-control" id="complete" name="complete">
+                  <option value="">--pilih status--</option>
+                  <option value="true" <%=query.complete=="true" ? ' selected' : '' %>>Yes</option>
+                  <option value="false" <%=query.complete=="false" ? ' selected' : '' %>>No</option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <button type="submit" class="btn btn-success">Cari</button>
+            <a href="/" class="btn btn-warning">Reset</a>
+          </div>
+        </form>
+      </div>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th><a href="<%= url.replace(`sortBy=${query.sortBy}`, `sortBy=id`).replace(`sortMode=${query.sortMode}`, `sortMode=${query.sortMode == 'asc' ? 'desc' : 'asc'}`) %>"><i class="fa-solid <%= query.sortBy == 'id' ? query.sortMode == 'asc' ? 'fa-sort-up' : 'fa-sort-down' : 'fa-sort' %>"></i> No.</a></th>
+            <th><a href="<%= url.replace(`sortBy=${query.sortBy}`, `sortBy=task`).replace(`sortMode=${query.sortMode}`, `sortMode=${query.sortMode == 'asc' ? 'desc' : 'asc'}`) %>"><i class="fa-solid <%= query.sortBy == 'task' ? query.sortMode == 'asc' ? 'fa-sort-up' : 'fa-sort-down' : 'fa-sort' %>"></i>Daftar Kerjaan</th>
+            <th>Status</th>
+            <th>Picture</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% data.forEach((item, index)=> { %>
+            <tr>
+              <td>
+                <%= item.id %>
+              </td>
+              <td>
+                <%= item.task %>
+              </td>
+              <td>
+                <%= item.complete ? 'Yes' : 'No' %>
+              </td>
+              <td>
+                <img src="/images/<%= item.picture ? item.picture : 'default.jpg' %>" alt="" width="100" height="auto" />
+              </td>
+              <td>
+                <a href="/edit/<%= item.id %>" class="btn btn-success">Edit</a>
+                <a href="/delete/<%= item.id %>" class="btn btn-danger">Delete</a>
+              </td>
+            </tr>
+            <% }) %>
+        </tbody>
+      </table>
+      <nav aria-label="Page navigation example">
+        <ul class="pagination">
+          <li class="page-item <%= page == 1 ? 'disabled' : '' %>">
+            <a class="page-link" href="<%= url.replace(`page=${page}`, `page=${page - 1}`) %>" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <% for(let i=1; i <=pages; i++){ %>
+            <li class="page-item <%= i == page ? 'active' : '' %>"><a class="page-link"
+                href="<%= url.replace(`page=${page}`, `page=${i}`) %>">
+                <%= i %>
+              </a></li>
+            <% } %>
+              <li class="page-item <%= page == pages ? 'disabled' : '' %>">
+                <a class="page-link" href="<%= url.replace(`page=${page}`, `page=${Number(page) + 1}`) %>"
+                  aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                </a>
+              </li>
+        </ul>
+      </nav>
+      <a href="/add" class="btn btn-primary">Tambah</a>
+</body>
+
+</html>
