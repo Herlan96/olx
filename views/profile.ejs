@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Belajar HTML</title>
+    <link href="/stylesheets/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+    <link href="/fontawesome/css/all.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
+    <style>
+        .modal-body {
+            top: 0;
+            left: 0;
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(167, 164, 164, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-body .my-modal {
+            width: 80%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="card">
+            <form action="" method="post" encType="multipart/form-data">
+                <div class="card-header">
+                    <div style="display: flex; justify-content: space-between; align-items: center;">
+                        <h1>Your Profile</h1>
+                        <a href="/logout" class="btn btn-danger">Keluar</a>
+                    </div>
+
+                </div>
+                <div class="card-body">
+                    <div class="mb-3 row">
+                        <label for="fullname" class="col-sm-2 col-form-label">Fullname</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="fullname" name="fullname"
+                                value="<%= data.fullname %>" required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="email" class="col-sm-2 col-form-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="email" name="email" value="<%= data.email %>"
+                                required>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="phone" class="col-sm-2 col-form-label">Phone</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="phone" name="phone" value="<%= data.phone %>">
+                        </div>
+                    </div>
+
+
+                    <div class="mb-3 row">
+                        <label for="pass" class="col-sm-2 col-form-label">Password</label>
+                        <div class="col-sm-10">
+                            <% if(data.id){ %>
+                                <a href="/users/password" class="btn btn-success">Change Password</a>
+                                <% } else { %>
+                                    <input type="password" class="form-control" id="pass" name="pass"
+                                        value="<%= data.pass %>" required>
+                                    <% } %>
+                        </div>
+                    </div>
+
+                    <div class="mb-3 row">
+                        <label for="avatar" class="col-sm-2 col-form-label">Avatar</label>
+                        <div class="col-sm-10">
+                            <input class="form-control" type="file" id="avatar" name="avatar">
+                        </div>
+                    </div>
+                    <% if(data.avatar){ %>
+                        <img src="/images/avatars/<%= data.avatar %>" alt="">
+                        <% } %>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-info"><i class="fa-solid fa-floppy-disk"></i></button>
+                    <a href="/" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i></a>
+                </div>
+            </form>
+            <div style="margin-top: 50px; padding: 20px;">
+                <table id="example" class="display" style="width:100%;">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Price</th>
+                            <th>Approved</th>
+                            <th>Picture</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal-body">
+        <div class="card my-modal">
+            <form id="form-edit">
+                <input type="hidden" id="id" value="">
+                <div class="card-header">
+                    <h1>Form Edit</h1>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3 row">
+                        <label for="title" class="col-sm-2 col-form-label">Title</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="title" value="">
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="description" class="col-sm-2 col-form-label">Description</label>
+                        <div class="col-sm-10">
+                            <textarea class="form-control" id="description"></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-3 row">
+                        <label for="price" class="col-sm-2 col-form-label">Price</label>
+                        <div class="col-sm-10">
+                            <input type="number" class="form-control" id="price" value="">
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-success">Save</button>
+                    <button type="button" class="btn btn-warning tombol-close">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            const table = $('#example').DataTable({
+                "lengthMenu": [[1, 2, 3, -1], [1, 2, 3, "All"]],
+                "processing": true,
+                "serverSide": true,
+                "ajax": "/ads/data",
+                "columns": [
+                    { data: "title" },
+                    { data: "price" },
+                    { data: "approved" },
+                    {
+                        data: "pictures",
+                        orderable: false,
+                        render: function (data, type) {
+                            return `<img src="/images/ads/${data[0]}" alt="gambar produk" width="100" />`
+                        }
+                    },
+                    {
+                        data: "id",
+                        orderable: false,
+                        render: function (data, type) {
+                            return `
+                            <button type="button" dataid="${data}" class="btn btn-success btn-edit"><i class="fa-solid fa-pencil"></i></button>
+                            <button type="button" dataid="${data}" class="btn btn-danger btn-delete"><i class="fa-solid fa-trash"></i></button>
+                            `
+                        }
+                    }
+                ]
+            });
+
+            $('#example').on('click', '.btn-edit', function () {
+                const id = $(this).attr('dataid')
+                $.get(`/ads/data/${id}`, function (data) {
+                    $('#id').val(data.id)
+                    $('#title').val(data.title)
+                    $('#description').val(data.description)
+                    $('#price').val(data.price)
+
+                    $('.modal-body').css('display', 'flex')
+                })
+            })
+
+            $('#example').on('click', '.btn-delete', function () {
+                const id = $(this).attr('dataid')
+
+                $.ajax({
+                    url: `/ads/data/${id}`,
+                    method: "DELETE",
+                    dataType: "json"
+                }).done(function (data) {
+                    console.log(data)
+                    table.ajax.reload();
+                }).fail(function (jqXHR, textStatus) {
+                    alert("Request failed: " + textStatus);
+                });
+
+            })
+
+            $('.tombol-close').click(function () {
+                $('.modal-body').css('display', 'none')
+            })
+
+            $('#form-edit').submit(function (e) {
+                e.preventDefault()
+                const id = $('#id').val()
+                const title = $('#title').val()
+                const description = $('#description').val()
+                const price = $('#price').val()
+
+                $.post(`/ads/data/${id}`, { title, description, price }, function (data) {
+                    table.ajax.reload();
+                    $('.modal-body').css('display', 'none')
+                })
+            })
+        });
+    </script>
+</body>
+
+</html>

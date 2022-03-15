@@ -5,19 +5,21 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var session = require('express-session');
 var flash = require('connect-flash');
-const fileUpload = require('express-fileupload')
-
+const fileUpload = require('express-fileupload');
 const { Pool } = require('pg')
+
 const pool = new Pool({
   user: 'postgres',
   host: 'localhost',
-  database: 'postgrebread',
+  database: 'olxdb',
   password: '12345',
   port: 5432,
 })
 
 var indexRouter = require('./routes/index')(pool);
-var usersRouter = require('./routes/users');
+var usersRouter = require('./routes/users')(pool);
+var categoriesRouter = require('./routes/categories')(pool);
+var adsRouter = require('./routes/ads')(pool);
 
 var app = express();
 
@@ -33,21 +35,23 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({
   secret: 'rubicamp',
   resave: true,
-  saveUninitialized: true,
-})) 
+  saveUninitialized: true
+}))
 app.use(flash());
 app.use(fileUpload());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/categories', categoriesRouter);
+app.use('/ads', adsRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
