@@ -53,8 +53,8 @@
                             </div>
 
                             <div class="card-footer">
-                                <button type="submit" class="btn btn-success"><i class="fa-solid fa-magnifying-glass"></i></button>
-                                <a href="/users" class="btn btn-warning"><i class="fa-solid fa-arrow-rotate-right"></i></a>
+                                <button type="submit" class="btn btn-outline-success"><i class="fa-solid fa-magnifying-glass"></i></button>
+                                <a href="/users" class="btn btn-outline-warning"><i class="fa-solid fa-arrow-rotate-right"></i></a>
                             </div>
                         </form>
                     </div>
@@ -82,8 +82,8 @@
                                         <%= item.fullname %>
                                     </td>
                                     <td>
-                                        <a href="/users/edit/<%= item.id %>" class="btn btn-success"><i class="fa-solid fa-pencil"></i></a>
-                                        <a href="/users/delete/<%= item.id %>" class="btn btn-danger"><i class="fa-solid fa-trash"></i></a>
+                                        <a href="/users/edit/<%= item.id %>" class="btn btn-outline-success"><i class="fa-solid fa-pencil"></i></a>
+                                        <a href="/users/delete/<%= item.id %>" class="btn btn-outline-danger"><i class="fa-solid fa-trash"></i></a>
                                     </td>
                                 </tr>
                                 <% }) %>
@@ -112,6 +112,6 @@
                                     </li>
                         </ul>
                     </nav>
-                    <a href="/users/add" class="btn btn-primary"><i class="fa-solid fa-plus"></i></i></a>
+                    <a href="/users/add" class="btn btn-outline-primary"><i class="fa-solid fa-plus"></i></i></a>
         </div>
         <%- include('../partials/footer') %>

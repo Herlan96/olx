@@ -75,49 +75,59 @@
                             </div>
                         </div>
 
-
-
-                        <% if(data.pictures?.length> 0){ data.pictures.forEach((picture, index) => { %>
-                            <div class="mb-3 row">
-                                <input type="hidden" name="pictures" value="<%= picture %>">
-                                <label for="" class="col-sm-2 col-form-label">Picture <span class="count">
-                                        <%= index + 1%>
-                                    </span></label>
-                                <div class="col-sm-9">
-                                    <img src="/images/ads/<%= picture %>" alt="" width="300" height="auto">
-                                </div>
-                                <div class="col-sm-1">
-                                    <button class="btn btn-danger" type="button" onclick="removeUpload(this)"><i
-                                            class="fa-solid fa-minus"></i></button>
-                                </div>
+                        <div class="mb-3 row">
+                            <label for="Location" class="col-sm-2 col-form-label">Location</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" id="Location" name="Location"
+                                    rows="5"><%= data.Location %></textarea>
                             </div>
-                            <% })} %>
+                        </div>
+
+
+                            <% if(data.pictures?.length> 0){ data.pictures.forEach((picture, index) => { %>
                                 <div class="mb-3 row">
+                                    <input type="hidden" name="pictures" value="<%= picture %>">
                                     <label for="" class="col-sm-2 col-form-label">Picture <span class="count">
-                                            <%= data.pictures ? data.pictures.length + 1 : 1 %>
+                                            <%= index + 1%>
                                         </span></label>
-                                    <div class="col-sm-10">
-                                        <input class="form-control" type="file" id="" name="picture">
+                                    <div class="col-sm-9">
+                                        <img src="/images/ads/<%= picture %>" alt="" width="300" height="auto">
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <button class="btn btn-danger" type="button" onclick="removeUpload(this)"><i
+                                                class="fa-solid fa-minus"></i></button>
                                     </div>
                                 </div>
-
-                                <div class="mb-3 row" id="div-add-btn">
-                                    <div class="col-sm-2"></div>
-                                    <div class="col-sm-10">
-                                        <button class="btn btn-success" type="button" onclick="addUpload()"><i
-                                                class="fa-solid fa-plus"></i></button>
+                                <% })} %>
+                                    <div class="mb-3 row">
+                                        <label for="" class="col-sm-2 col-form-label">Picture <span class="count">
+                                                <%= data.pictures ? data.pictures.length + 1 : 1 %>
+                                            </span></label>
+                                        <div class="col-sm-10">
+                                            <input class="form-control" type="file" id="" name="picture">
+                                        </div>
                                     </div>
-                                </div>
 
-
-
+                                    <div class="mb-3 row" id="div-add-btn">
+                                        <div class="col-sm-2"></div>
+                                        <div class="col-sm-10">
+                                            <button class="btn btn-success" type="button" onclick="addUpload()"><i
+                                                    class="fa-solid fa-plus"></i></button>
+                                        </div>
+                                    </div>
+                        </div>
                     </div>
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-info"><i class="fa-solid fa-floppy-disk"></i></button>
-                        <a href="/ads" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i></a>
-                    </div>
-                </form>
             </div>
+
+
+
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-info"><i class="fa-solid fa-floppy-disk"></i></button>
+            <a href="/ads" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i></a>
+        </div>
+        </form>
+        </div>
         </div>
 
         <script>
@@ -147,7 +157,7 @@
                 for (let index = 0; index < counter.length; index++) {
                     counter[index].innerHTML = index + 1
                 }
-                
+
             }
 
         </script>

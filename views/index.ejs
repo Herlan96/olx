@@ -18,7 +18,7 @@
     }
 
     .header {
-      background-color: aqua;
+      background-color: rgb(176, 196, 222);
       display: flex;
       position: fixed;
       left: 0;
@@ -51,7 +51,7 @@
       padding: 10px;
       width: 200px;
       height: 270px;
-      border: 1px solid #ccc;
+      border: 1px solid rgb(16, 68, 136);
       border-radius: 10px;
       align-items: center;
     }
@@ -65,22 +65,45 @@
 
     .item-ads h2 {
       margin-top: 50px;
-      font-size: 20px;
-      color: rgb(99, 98, 98);
+      font-size: 18px;
+      color: rgb(16, 68, 136);
     }
 
     .item-ads p {
       font-size: 15px;
-      color: darkgray;
+      color: rgb(16, 68, 136);
     }
 
     .form-inline {
-      width: 70%;
+      width: 60%;
       display: flex;
       flex-direction: row;
       align-items: center;
       gap: 10px;
     }
+
+    #map {
+      float: left;
+      width: calc(100% - 400px);
+      height: 100vh;
+    }
+
+    .D_nw {
+      width: 180px;
+    }
+
+    .D_nU,
+    .D_nV {
+      position: relative;
+      flex-direction: column;
+    }
+
+    .D_nU {
+      flex-flow: column nowrap;
+    }
+
+    
+  
   </style>
 </head>
 
@@ -94,6 +117,20 @@
           </path>
         </svg>
       </a>
+      <div class="D_nU D_nw" role="dropdown">
+        <div class="D_jJ">
+          <div class="D_jK D_jU D_nv">
+            <div class="D_jM"><img alt="" class="D_fn D_fk D_kf" 
+              width="48px" height="48px" viewBox="0 0 1024 1024"
+                data-aut-id="icon" class="" fill-rule="evenodd">
+              <path class="rui-4K4Y7" title="">
+                <input class="D_jP D_jQ D_kc D_jV" placeholder="" type="text" value="">
+            </div>
+          </div>
+        </div>
+        <div class="D_oV D_oe" style="left: 0px; position: absolute; top: 44px;"></div>
+      </div>
+      </a>
       <form class="form-inline" action="" method="get">
         <select name="category">
           <option value="">Semua</option>
@@ -105,7 +142,7 @@
         <input type="text" name="keyword" value="<%= query.keyword %>">
         <button type="submit" class="btn"><i class="fa-solid fa-magnifying-glass"></i></button>
       </form>
-      <a href="<%= user ? '/profile' : '/login' %>">
+      <a class="btn" href="<%= user ? '/profile' : '/login' %>">
         <%= user ? user.fullname : 'login' %>
       </a>
       <a class="btn" href="/sell">jual</a>
@@ -114,21 +151,27 @@
       <div class="slideshow-container">
 
         <div class="mySlides fade">
-          <div class="numbertext">1 / 3</div>
-          <img src="/images/img_nature_wide.jpeg" style="width:100%">
+          <div class="numbertext">1 / 4</div>
+          <img src="/images/wallpaperflare.com_wallpaper(3).jpg" style="width:100%">
           <div class="text">Caption Text</div>
         </div>
 
         <div class="mySlides fade">
-          <div class="numbertext">2 / 3</div>
-          <img src="/images/img_snow_wide.jpeg" style="width:100%">
+          <div class="numbertext">2 / 4</div>
+          <img src="/images/wallpaperflare.com_wallpaper(1).jpg" style="width:100%">
           <div class="text">Caption Two</div>
         </div>
 
         <div class="mySlides fade">
-          <div class="numbertext">3 / 3</div>
-          <img src="/images/img_mountains_wide.jpeg" style="width:100%">
+          <div class="numbertext">3 / 4</div>
+          <img src="/images/59f25d47312a323077310621f5d07a1d.jpg" style="width:100%">
           <div class="text">Caption Three</div>
+        </div>
+
+        <div class="mySlides fade">
+          <div class="numbertext">4 / 4</div>
+          <img src="/images/Peta-Indonesia-Lengkap-dengan-Batas-Negara-1024x397.png" style="width:100%">
+          <div class="text">Caption four</div>
         </div>
 
         <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
@@ -141,6 +184,7 @@
         <span class="dot" onclick="currentSlide(1)"></span>
         <span class="dot" onclick="currentSlide(2)"></span>
         <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
       </div>
     </div>
     <div class="ads">
@@ -158,6 +202,7 @@
         </a>
         <% }) %>
     </div>
+
   </div>
 
   <script src="/javascripts/carousel.js"></script>
@@ -204,7 +249,11 @@
       }
     });
   </script>
+  <div id="map"></div>
 
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD_qHKYFum4g_Y8e7sgqS3T26Fjz1IxBpg&libraries=places"></script>
+  <script src="script.js"></script>
 </body>
 
 </html>

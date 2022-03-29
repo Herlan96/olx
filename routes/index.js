@@ -24,7 +24,7 @@ module.exports = function (db) {
     }
 
     const page = req.query.page || 1
-    const limit = 10
+    const limit = 50
     const offset = (page - 1) * limit
     let sql = 'select count(*) as total from ads';
     if (params.length > 0) {
@@ -45,10 +45,12 @@ module.exports = function (db) {
       sql += ' limit $1 offset $2'
       db.query(sql, [limit, offset], (err, data) => {
         if (err) return res.send(err)
+       
         db.query('select * from categories order by id', (err, categories) => {
           if (err) return res.send(err)
           db.query('select * from users order by id', (err, users) => {
             if (err) return res.send(err)
+            
             if (req.query.format == 'json') {
               res.json(data.rows)
             } else {

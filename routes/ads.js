@@ -10,8 +10,6 @@ module.exports = function (db) {
 
   router.get('/', helpers.isLoggedIn, function (req, res) {
 
-    console.log(req.originalUrl)
-
     const url = req.url == '/' ? '/ads?page=1&sortBy=id&sortMode=asc' : req.url.replace('/', '/ads')
 
     const params = []
@@ -244,8 +242,6 @@ module.exports = function (db) {
   })
 
   router.get('/data', function (req, res) {
-
-    console.log(req.query)
 
     const params = []
 

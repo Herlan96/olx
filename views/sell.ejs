@@ -30,6 +30,7 @@
                             <textarea class="form-control" id="description" name="description"
                                 rows="5"><%= data.description %></textarea>
                         </div>
+
                     </div>
 
                     <div class="mb-3 row">
@@ -77,10 +78,18 @@
                                 </div>
                             </div>
 
+                            <div class="mb-3 row">
+                                <label for="Location" class="col-sm-2 col-form-label">Location</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" id="Location" name="Location"
+                                        rows="5"><%= data.Location %></textarea>
+                                </div>
+                            </div>
+
                             <div class="mb-3 row" id="div-add-btn">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-10">
-                                    <button class="btn btn-success" type="button" onclick="addUpload()"><i
+                                    <button class="btn btn-outline-success" type="button" onclick="addUpload()"><i
                                             class="fa-solid fa-plus"></i></button>
                                 </div>
                             </div>
@@ -89,8 +98,8 @@
 
                 </div>
                 <div class="card-footer">
-                    <button type="submit" class="btn btn-info"><i class="fa-solid fa-floppy-disk"></i></button>
-                    <a href="/ads" class="btn btn-warning"><i class="fa-solid fa-rotate-left"></i></a>
+                    <button type="submit" class="btn btn-outline-info"><i class="fa-solid fa-floppy-disk"></i></button>
+                    <a href="/ads" class="btn btn-outline-warning"><i class="fa-solid fa-rotate-left"></i></a>
                 </div>
             </form>
         </div>
